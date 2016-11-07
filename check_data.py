@@ -98,8 +98,15 @@ def main(url):
         gap_list = test_gaps(ds['time'].data)
 
         for v in variables:
-            var_data = ds[v].data
             print v
+            try:
+                var_data = ds[v].data
+            except IndexError:
+                print 'variable error'
+                data.append((ref_des, ds.stream, deployment, v, 'Error', 'Error', 'Error', 'Error', 'Error',
+                         'Error', 'Error', 'Error'))
+                break
+            
             # Availability test
             if v in ref_des_dict[ds.stream]:
                 available = True
